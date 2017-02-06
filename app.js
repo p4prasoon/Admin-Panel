@@ -6,6 +6,12 @@ function alert(a) {
 }
 
 var app = angular.module('moveinsync', []);
+app.filter('capitalize', function() {
+    return function(input, all) {
+        var reg = (all) ? /([^\W_]+[^\s-]*) */g : /([^\W_]+[^\s-]*)/;
+        return (!!input) ? input.replace(reg, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); }) : '';
+    }
+});
 app.controller('MainCtrl', function($scope, UserServices, $http) {
 
     $scope.init = function() {
@@ -27,8 +33,11 @@ app.controller('MainCtrl', function($scope, UserServices, $http) {
         });
     };
     $scope.init();
-
-
+    $scope.searchVhcl = '';
+    $scope.search = function(row) {
+        console.log(row);
+        //return (angular.lowercase(row.userinfo.userid).indexOf(angular.lowercase($scope.searchby) || '') !== -1);
+    };
     /*Draggable*/
 
     $scope.allowDrop = function(ev) {

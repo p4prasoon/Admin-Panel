@@ -22,31 +22,17 @@
         <div class="container-fluid" style="padding: 0;">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <div class="navbar-header" style="margin-left:101px">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-                        <a class="navbar-brand" href="#" ng-cloak>Available Vehicles ({{vehicleDetails.length}})</a>
+                    <div class="navbar-header" style=" margin-left: 8px;">
+
+                        <span class="navbar-brand" ng-cloak>Available Vehicles ({{vehicleDetails.length}})</span>
+                        <input type="text" ng-model="searchVhcl" placeholder="Search By Available Seat" style="margin-top: 12px;width: 210px;border-radius:4px;">
                     </div>
-                    <div class="navbar-header" style=" margin-left: 377px;">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+                    <div class="navbar-header" style=" margin-left: 239px;">
+
                         <a class="navbar-brand" href="#">Vehicles Details</a>
                     </div>
                     <div class="navbar-header" style=" float:right; margin-right: 98px;">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+
                         <a class="navbar-brand" href="#" ng-cloak>Available Users ({{userDetails.length}})</a>
                     </div>
 
@@ -56,7 +42,7 @@
         <div class="container-fluid" style="height: calc(100vh - 52px);padding: 0;">
             <div class="col-md-4 left pane">
 
-                <div ng-repeat="vhcl in vehicleDetails | orderBy :'status' " ng-click="vhclDetails(vhcl)" ng-class="{well:vhcl.status==1,yellow:vhcl.status==0,pointer:vhcl.dsbld,selected:vhcl.DriverName == selectedvehicle.DriverName}">
+                <div ng-repeat="vhcl in vehicleDetails | orderBy :'status' |filter:{AvlblSeat:searchVhcl} " ng-click="vhclDetails(vhcl)" ng-class="{well:vhcl.status==1,yellow:vhcl.status==0,pointer:vhcl.dsbld,selected:vhcl.DriverName == selectedvehicle.DriverName}">
 
                     <div class="col-md-12">
                         <div class="col-md-4">
@@ -81,7 +67,9 @@
                     <div class="clearfix"></div>
 
                 </div>
-
+                <div ng-if="(vehicleDetails | filter:{AvlblSeat:searchVhcl}).length <= 0" style="height: 44px; text-align: center; margin-top: 40%; padding-top: 8px; background-color: white;">
+                    <span style="font-size: 21px;">No Records Found</span>
+                </div>
             </div>
             <div class="col-md-5 middle ">
 
@@ -93,8 +81,9 @@
                     </div>
                     <div id="myProgress" style="margin-top: 13px;">
                         <div id="myBar" style="width:{{width}}">
-                            <div id="label" ng-cloak>{{selectedvehicle.AvlblSeat}} Seat Available</div>
+
                         </div>
+                        <div id="label" ng-cloak>{{selectedvehicle.AvlblSeat}} Seat Available</div>
                     </div>
                     <div class="col-md-12" style="margin-top: 13px;">
 
@@ -140,7 +129,7 @@
 
                         </div>
                         <div class="col-md-12">
-                            <span style="margin-left:15px" ng-cloak><b>{{user.name}}</b></span>
+                            <span style="margin-left:15px;text-align: center; width: 52px; display: inline-block;" ng-cloak><b>{{user.name | capitalize}}</b></span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
